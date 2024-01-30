@@ -1,0 +1,32 @@
+1. THIS CODE ALLOWS YOU TO DRAW ON CANVAS ELEMENT
+2. need to click and create a canvas element there -> where the form is
+<canvas id="myCanvas" width="200" height="100" style="border:1px solid #000000;"></canvas>
+<button id="clear-button"></button>
+
+<script>
+    let canvas = document.getElementById("myCanvas");
+    const ctx = canvas.getContext("2d");
+    const button = document.getElementById("clear-button);
+    let moving = false;
+
+    canvas.addEventListener("mousedown", (e) => {
+    //console.log(e)
+        moving = true;
+        ctx.fillRect(e.offsetX, e.offsetY, 5, 5)
+    })
+
+    canvas.addEventListener("mouseup", (e) => {
+        moving = false;
+        ctx.save();
+    })
+
+    canvas.addEventListener("mousemove", (e) => {
+        if(moving){
+            ctx.fillRect(e.offsetX, e.offsetY, 5, 5)
+        }
+    })
+
+    button.addEventListener("click", (e) => {
+	    ctx.clearRect(0,0,canvas.width, canvas.height)
+    })
+</script>
