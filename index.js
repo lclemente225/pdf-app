@@ -3,21 +3,34 @@
   const { pdfjsLib } = globalThis;
   pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.0.379/pdf.worker.mjs';
   const {startDrawingPC, stopDrawingPC, drawPC, pcDraw} = pcDrawFn;
-  console.log("pcdraw obj", pcDraw)
   
   const pdfContainer = document.getElementById("pdfContent");
-  const canvasElements = pdfContainer.children;
+  const canvasElements = pdfContainer.children;//this returns an HTMLCollection[]
   //const { degrees, PDFDocument, StandardFonts, rgb } = PDFLib;
-  document.addEventListener('DOMContentLoaded', () => {
-    pcDraw.canvas = canvasElements
+
+  pdfContainer.addEventListener('change', () => {
+    try{
+      if(canvasElements){
+        
+      pcDraw.canvas = canvasElements
+      console.log("pcdraw canvas is setting", pcDraw)
+      }else{
+        console.log("What is happenign oh no")
+      }
+
+    }catch(e) {
+      console.log("Error!!: ", e)
+    }
   })
-//make function to create a square?
+
+  //make function to create a square?
   pdfContainer.addEventListener("mousedown",  function(e) {
     for (let i = 0; i < canvasElements.length; i++) {
         const canvas = canvasElements[i];
         //check this function getBoundingClientRect
         const rect = canvas.getBoundingClientRect();
-
+        //canvas.classList.add(`drawing-${i}`)
+   
         if (
           e.clientX >= rect.left &&
           e.clientX <= rect.right &&
@@ -36,7 +49,7 @@
       const rect = canvas.getBoundingClientRect()
       const x = event.clientX - rect.left
       const y = event.clientY - rect.top
-      //console.log("canvas", canvas, "x: " + x + " y: " + y)
+      console.log("canvas", canvas, "x: " + x + " y: " + y)
   }
   
   //this should be an onclick event
@@ -62,4 +75,10 @@
   }
   HTMLCanvasElement.prototype.relMouseCoords = relMouseCoords;
 
+  const saveButton = document.getElementById("save-pdf");
+  
+  saveButton.addEventListener('click', () => {
+    pdfContainer.removeChild(canvasElements[0])
+    console.log("removing child", canvasElements, "length: ",canvasElements.length)
+  })
   export {canvasElements}

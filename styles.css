@@ -1,6 +1,6 @@
 body {
     width: 100vw;
-    height: 100vh;
+    height: min-content;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -22,16 +22,27 @@ body {
   }
   
 
-
   #pdf-file-input{
     border: 2px solid red;
+    cursor: pointer;
   }
   
-  #pdfContent {
+  #pdfContent{
+    display: none;
+  }
+
+  #pdfContent:has(canvas) {
+    display: block;
     position: relative;
     margin-top: 20px;
     border: 2px solid red;
-    height: max-content;
+    height: 100%;
     width: min-content;
     overflow: auto;
   }
+
+  .drawing {
+    outline: 2px solid green;
+  }
+
+  

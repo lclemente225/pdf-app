@@ -1,9 +1,11 @@
 const pcDraw = {
-    canvas: 0,
+    canvas: null,
     isDrawing: false,
     ctx: null
 }
 let { canvas, isDrawing, ctx } = pcDraw
+
+
 if( canvas ){
      ctx = pcDraw.canvas.getContext('2d')
      canvas.addEventListener('mousedown', startDrawingPC);
@@ -23,7 +25,7 @@ function stopDrawingPC() {
   ctx.beginPath(); // Start a new path
 }
 
-function drawPC(e) {
+function drawPC(e, canvas) {
   if (!isDrawing) return;
   const x = e.clientX - canvas.offsetLeft;
   const y = e.clientY - canvas.offsetTop;
