@@ -28,7 +28,7 @@ function handleFileSelect(event, container, library) {
     
     reader.readAsArrayBuffer(file);
     
-    if(canvasElements.length > 1){
+    if(canvasElements.length > 0){
         canvas.innerHTML = "";
     }
 
