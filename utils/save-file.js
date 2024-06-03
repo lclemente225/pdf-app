@@ -1,22 +1,22 @@
- 
-  export async function saveCanvasToPDF(canvas, pdfDoc, filename) {
-    // Step 1: Convert canvas content to image data URL
-    const imageDataUrl = canvas.toDataURL('image/png');
-  
-    // Step 2: Add a new page to the existing PDF document
-    const page = pdfDoc.addPage();
-  
-    // Step 3: Add the image to the new page
-    const img = await fetch(imageDataUrl).then(res => res.blob());
-    page.image(img, { fit: [canvas.width, canvas.height] });
-  
-    // Step 4: Save the updated PDF document
-    const blob = await pdfDoc.save();
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = filename || 'canvas.pdf';
-    link.click();
-    URL.revokeObjectURL(url);
-  }
-  
+export async function saveCanvasToPDF(canvasElements) {
+    // Create a new PDF document to store the combined pages
+    const combinedPDF = new jsPDF();
+
+    // Iterate through the array of canvases
+    for (const element of canvasElements) {
+      //each loop:
+      //1. converts canvas to jpg
+      //2. puts jpg onto new jsPDF canvas
+      //3. adds a page to the pdf 
+      //4. continue loop
+        const imageDataUrl = element.toDataURL('image/jpeg');
+        combinedPDF.addImage(imageDataUrl, 'JPEG', 0, 0, 210, 297);
+        combinedPDF.addPage();
+    }
+    //DELETE last page before saving
+    //because it's empty
+    combinedPDF.deletePage(combinedPDF.internal.getNumberOfPages());
+    combinedPDF.save('your-saved.pdf');
+}
+
+//EXTRA NOTE: remember that jsPDf is imported by CDN on index.html

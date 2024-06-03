@@ -35,10 +35,16 @@ body {
     display: block;
     position: relative;
     margin-top: 20px;
+    padding: 10px;
     border: 2px solid red;
     height: 100%;
     width: min-content;
     overflow: auto;
+  }
+
+  #pdfContent canvas {
+    outline: 1px solid green;
+    margin-top: 10px;
   }
 
   .drawing {

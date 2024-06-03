@@ -2,10 +2,11 @@
   <head>
     <meta charset="utf-8" /><link rel="stylesheet" href="styles.css" type="text/css"/>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.0.379/pdf.min.mjs" type="module"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.debug.js" integrity="sha384-NaWTHo/8YCBYJ59830LTz/P4aQZK1sS0SneOgAvhsIl3zBu8r9RevNg5lHCHAuQ/" crossorigin="anonymous"></script>
   </head>
 
   <body>
-    <input type="file" id="pdf-file-input" accept=".pdf">
+    <input type="file" id="pdf-file-input" accept=".pdf" aria-placeholder="dude">
     <button id="save-pdf" >Save File</button>
     <div id="pdfContent">
     </div>
