@@ -15,7 +15,7 @@
     let canvasIndex;
     for (let i = 0; i < canvasElements.length; i++) {
         const canvas = canvasElements[i];
-        //check this function getBoundingClientRect
+        //getBoundingClientRect obtains properties of the canvas (e.g. width, height)
         const rect = canvas.getBoundingClientRect();
         //canvas.classList.add(`drawing-${i}`)
    
@@ -26,13 +26,14 @@
           e.clientY <= rect.bottom
         ) {
           canvasIndex = e.target.classList[1];
+          //put width height and border color on canvas index 
           drawOnThisCanvas = canvas
             //getCursorPosition(canvas, e);
             break; // Break out of the loop once the correct canvas is found
         }
     }
 
-    startDrawingPC(e, drawOnThisCanvas, canvasIndex) 
+    startDrawingPC(e, drawOnThisCanvas, canvasIndex, e.clientX, e.clientY) 
   })  
   
   fileUploadInput.addEventListener('change', (e) => {
