@@ -6,22 +6,26 @@
   </head>
 
   <body>
-    <div id="header">
+    <div id="header" class="flex-center">
       <h1>
         Free PDF Signer
       </h1>
     </div>
-    <div id="instructions-title">
+    <div id="instructions-title" class="flex-center">
       Upload your file here 
       and then click anywhere to sign
     </div>
-    <div class="content-area">
-      <input type="file" id="pdf-file-input" accept=".pdf" aria-placeholder="dude">
-      <button id="save-pdf" >Save File</button>
+    <div class="content-area flex-col-center">
+      <div class="file-functions">
+        <input type="file" id="pdf-file-input" accept=".pdf" aria-placeholder="dude">
+        <button id="save-pdf" >Save File</button>
+        <label><input type="checkbox" id="checkbox" /> Checked</label>
+        <button id="button-test">Button here</button>
+      </div>
       <div id="pdfContent">
       </div>
     </div>
-    <div class="footer">
+    <div class="footer flex-center">
       Created by Lawrence Clemente
     </div>
   </body>

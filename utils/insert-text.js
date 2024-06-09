@@ -4,4 +4,4 @@ function insertText(text, x, y, option, canvas){
 
 }
 
-export {insertText}
+export {insertText} 
