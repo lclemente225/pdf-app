@@ -11,6 +11,11 @@ To create a basic PDF application that can render, save, add your signature and 
     <li>HTML</li>
     <li>CSS</li>
     <li>Javascript</li>
+    ------------------
+    <div>Javascript Libraries</div>
+    <li>jspdf</li>
+    <li>pdf-lib</li>
+    <li>expressJS</li>
 </ol>
 
 

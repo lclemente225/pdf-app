@@ -53,14 +53,26 @@ function handleFileSelect(event, container, library) {
         const newContext = newCanvas.getContext('2d');
         newCanvas.width = viewport.width;
         newCanvas.height = viewport.height;
-        console.log("newpage", newPage.getViewport())
-  
+        console.log("This is a new page for the pdf in render.js file: ", newPage.getViewport())
+        
+        //newContext.strokeText('1', 50, 200)
+
         newCanvas.classList.add("canvas-render")
         newCanvas.classList.add(`${i}`)
         canvas.appendChild(newCanvas)
   
       // Render the PDF page on the canvas
-        await newPage.render({ canvasContext: newContext, viewport }).promise;
+        await newPage.render({ canvasContext: newContext, viewport }).promise
+        .then(() => {
+          const newCanvas = document.createElement("canvas");
+          const newContext = newCanvas.getContext('2d');
+          newCanvas.classList.add('page-number')
+          newCanvas.width = '50px';
+          newCanvas.height = '20px';
+          newContext.font = '20px serif';
+          newContext.fillText(`Page ${i}`, 10, 20);
+
+        });
       }
       
       try{

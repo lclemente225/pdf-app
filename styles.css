@@ -15,6 +15,19 @@ body {
     margin: 25px;
   }
   
+  .flex-center{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .flex-col-center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
   .small {
     font-family: helvetica;
     font-size: 18px;
@@ -24,7 +37,6 @@ body {
   
 
   #pdf-file-input {
-    border: 2px solid red;
     cursor: pointer;
   }
   
@@ -36,9 +48,8 @@ body {
     display: block;
     position: relative;
     margin: 20px 0;
-    padding: 20px;
+    padding: 20px 20px 10px 20px;
     background-color: grey;
-    border: 2px solid red;
     height: 100vh;
     width: min-content;
     overflow: auto;
@@ -46,6 +57,7 @@ body {
 
   #pdfContent canvas {
     outline: 1px solid green;
+    margin-bottom: 10px;
   }
 
   .drawing {
@@ -74,20 +86,26 @@ body {
   .footer {
     position: absolute;
     background-color: rgb(52, 89, 209);
-    color: white;
+    color: rgb(255, 248, 248);
     width: 100%;
     bottom: 0px;
     height: 10vh;
+    display: flex;
+    justify-content: space-around;
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  }
+
+  .portfolio-link {
+    color: rgb(255, 166, 0);
+    text-decoration: none;
+  }
+
+  .portfolio-link:hover {
+    color: rgb(255, 248, 248);
+    text-decoration: underline;
   }
   
-  .flex-center{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .flex-col-center {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+  .spanny {
+    z-index: 10000;
+    font-size: 20rem;
   }
