@@ -1,5 +1,4 @@
 import { canvasElements } from "../index.js";
-import { pcDraw } from './pc-draw.js';
 
 
 function handleFileSelect(event, container, library) {
@@ -25,13 +24,13 @@ function handleFileSelect(event, container, library) {
 
   let pdfUIntArray;
 
-  async function downloadAndRenderPDF(canvas, file, pdfLib) {
+  async function downloadAndRenderPDF(pdfContainer, file, pdfLib) {
     const reader = new FileReader();
     
     reader.readAsArrayBuffer(file);
 
     if(canvasElements.length > 0){
-        canvas.innerHTML = "";
+        pdfContainer.innerHTML = "";
     }
 
     reader.onload = async function (event) {
@@ -62,7 +61,7 @@ function handleFileSelect(event, container, library) {
 
         newCanvas.classList.add("canvas-render")
         newCanvas.classList.add(`${i}`)
-        canvas.appendChild(newCanvas)
+        pdfContainer.appendChild(newCanvas)
   
       // Render the PDF page on the canvas
         await newPage.render({ canvasContext: newContext, viewport }).promise
@@ -70,20 +69,11 @@ function handleFileSelect(event, container, library) {
           const pageNum = document.createElement("span");
           pageNum.classList.add(`page-number-${i}`)
           pageNum.classList.add(`page-number`)
-          pageNum.textContent = `page ${i}`
+          pageNum.textContent = `Page ${i}`
           newCanvas.parentNode.insertBefore(pageNum, newCanvas)
         });
       }
       
-      try{
-        if(canvasElements.length === pdfDoc.numPages){
-          pcDraw.canvas = canvasElements;
-          console.log("pcdraw canvas is setting", pcDraw, "thisi s canvas: ", canvas)
-        }
-  
-      }catch(e) {
-        console.log("Error!!: ", e)
-      }
     };
   }
 

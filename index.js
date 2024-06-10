@@ -3,7 +3,7 @@
   import {saveCanvasToPDF} from './utils/save-file.js';
   const { pdfjsLib } = globalThis;
   pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.0.379/pdf.worker.mjs';
-  const {startDrawingPC, stopDrawingPC, drawPC, pcDraw} = pcDrawFn;
+  const {startDrawingPC, stopDrawingPC, drawPC} = pcDrawFn;
   const fileUploadInput = document.getElementById('pdf-file-input');
   const saveButton = document.getElementById("save-pdf");
   const pdfContainer = document.getElementById("pdfContent");
@@ -18,6 +18,9 @@
     return canvasElementsFilter
   }
 
+  function moveMoveHandler(e, drawOnThisCanvas, canvasIndex){
+    return startDrawingPC(e, drawOnThisCanvas, canvasIndex, e.clientX, e.clientY)
+  }
 
   //make function to create a square?
   pdfContainer.addEventListener("mousedown",  function(e) {
@@ -44,8 +47,13 @@
         }
     }
 
-    startDrawingPC(e, drawOnThisCanvas, canvasIndex, e.clientX, e.clientY) 
+    pdfContainer.addEventListener("mousemove", moveMoveHandler(e, drawOnThisCanvas, canvasIndex))
   })  
+
+  pdfContainer.addEventListener("mouseup", () => {
+    stopDrawingPC()
+    pdfContainer.removeEventListener("mousemove", moveMoveHandler)
+  })
   
   fileUploadInput.addEventListener('change', (e) => {
       handleFileSelect(e, pdfContainer, pdfjsLib)
@@ -53,7 +61,6 @@
   
   saveButton.addEventListener('click', () => { 
     let filteredCanvasElements = canvasElementsFiltered(canvasElements)
-    console.log("save canvaserlemtns",filteredCanvasElements)
     let canvas = filteredCanvasElements[0].getBoundingClientRect();
     let widthInPixels = canvas.width;
     let heightInPixels = canvas.height;

@@ -48,7 +48,7 @@ body {
     display: block;
     position: relative;
     margin: 20px 0;
-    padding: 40px 20px 10px 20px;
+    padding: 30px 20px 10px 20px;
     background-color: grey;
     height: 100vh;
     width: min-content;
@@ -58,6 +58,12 @@ body {
   #pdfContent canvas {
     outline: 1px solid green;
     margin-bottom: 40px;
+  }
+
+  .page-number {
+    display: inline-block;
+    margin-bottom: 10px;
+    color: white;
   }
 
   .drawing {
@@ -105,7 +111,3 @@ body {
     text-decoration: underline;
   }
   
-  .spanny {
-    z-index: 10000;
-    font-size: 20rem;
-  }
