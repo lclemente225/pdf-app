@@ -1,3 +1,4 @@
+import { canvasElementsFiltered } from "../index.js";
 const pcDraw = {
     canvas: null,
     selectedCanvas: null,
@@ -7,8 +8,7 @@ const pcDraw = {
 let { canvas, isDrawing, ctx } = pcDraw
 
 const pdfContainer = document.getElementById("pdfContent");
-const canvasElements = pdfContainer.children;
-
+const canvasElements = canvasElementsFiltered(pdfContainer.children);
 //ONCLICK GET CANVAS AND MATCH
 
 document.body.addEventListener('change', () => {

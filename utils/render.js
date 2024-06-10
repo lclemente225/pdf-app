@@ -1,6 +1,7 @@
 import { canvasElements } from "../index.js";
 import { pcDraw } from './pc-draw.js';
 
+
 function handleFileSelect(event, container, library) {
     const fileInput = event.target;
     const files = fileInput.files;
@@ -22,6 +23,8 @@ function handleFileSelect(event, container, library) {
   //when that element is changed aka a file is uploadded
   //this function will trigger
 
+  let pdfUIntArray;
+
   async function downloadAndRenderPDF(canvas, file, pdfLib) {
     const reader = new FileReader();
     
@@ -33,18 +36,18 @@ function handleFileSelect(event, container, library) {
 
     reader.onload = async function (event) {
       const pdfData = new Uint8Array(event.target.result);
+      pdfUIntArray = pdfData
         //ppromise then
       const pdfDoc = await pdfLib.getDocument({ data: pdfData }).promise;
   
       //iterate through all pages and render and append to canvas container
       for(let i = 1; i <= pdfDoc.numPages; i++) {
-        let scale = 1.15;
+        let scale = 1.5;
         const newPage = await pdfDoc.getPage(i);
         let pdfWidth = newPage._pageInfo.view[2];
-
         //scale so if it's too large, then make it smaller
-        if(pdfWidth > 900){
-          let windowWidth = window.innerWidth * 0.8
+        if(pdfWidth > window.innerWidth*0.9){
+          let windowWidth = window.innerWidth * 0.8;
           let scaleValue = windowWidth/pdfWidth;
           scale = scaleValue;
         }
@@ -64,14 +67,11 @@ function handleFileSelect(event, container, library) {
       // Render the PDF page on the canvas
         await newPage.render({ canvasContext: newContext, viewport }).promise
         .then(() => {
-          const newCanvas = document.createElement("canvas");
-          const newContext = newCanvas.getContext('2d');
-          newCanvas.classList.add('page-number')
-          newCanvas.width = '50px';
-          newCanvas.height = '20px';
-          newContext.font = '20px serif';
-          newContext.fillText(`Page ${i}`, 10, 20);
-
+          const pageNum = document.createElement("span");
+          pageNum.classList.add(`page-number-${i}`)
+          pageNum.classList.add(`page-number`)
+          pageNum.textContent = `page ${i}`
+          newCanvas.parentNode.insertBefore(pageNum, newCanvas)
         });
       }
       
@@ -87,4 +87,4 @@ function handleFileSelect(event, container, library) {
     };
   }
 
-  export {handleFileSelect}
+  export {handleFileSelect, pdfUIntArray}

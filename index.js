@@ -7,14 +7,25 @@
   const fileUploadInput = document.getElementById('pdf-file-input');
   const saveButton = document.getElementById("save-pdf");
   const pdfContainer = document.getElementById("pdfContent");
-  const canvasElements = pdfContainer.children;//this returns an HTMLCollection[]
+  let canvasElements = pdfContainer.children;//this returns an HTMLCollection[]
+
+  function canvasElementsFiltered(htmlCollection){
+    let canvasElementsArray = Array.from(htmlCollection);
+    let canvasElementsFilter = canvasElementsArray.filter((element) => {
+      let pageNumSelect = Array.from(element.classList).includes("page-number");
+      return !pageNumSelect
+    })
+    return canvasElementsFilter
+  }
+
 
   //make function to create a square?
   pdfContainer.addEventListener("mousedown",  function(e) {
     let drawOnThisCanvas;
     let canvasIndex;
-    for (let i = 0; i < canvasElements.length; i++) {
-        const canvas = canvasElements[i];
+    let filteredCanvasElements = canvasElementsFiltered(canvasElements)
+    for (let i = 0; i < filteredCanvasElements.length; i++) {
+        const canvas = filteredCanvasElements[i];
         //getBoundingClientRect obtains properties of the canvas (e.g. width, height)
         const rect = canvas.getBoundingClientRect();
         //canvas.classList.add(`drawing-${i}`)
@@ -40,8 +51,18 @@
       handleFileSelect(e, pdfContainer, pdfjsLib)
   })
   
-  saveButton.addEventListener('click', () => {
-    saveCanvasToPDF(canvasElements);
+  saveButton.addEventListener('click', () => { 
+    let filteredCanvasElements = canvasElementsFiltered(canvasElements)
+    console.log("save canvaserlemtns",filteredCanvasElements)
+    let canvas = filteredCanvasElements[0].getBoundingClientRect();
+    let widthInPixels = canvas.width;
+    let heightInPixels = canvas.height;
+    let dpi = 300;
+    let widthInInches = widthInPixels / dpi;
+    let heightInInches = heightInPixels / dpi;
+    let widthInPoints = widthInInches * 120;
+    let heightInPoints = heightInInches * 120;
+    saveCanvasToPDF(filteredCanvasElements, widthInPixels, heightInPixels);
   })
 
   
@@ -70,4 +91,4 @@
 
   //todo ideas
   //can add function to resize scale when the window changes.
-  export {canvasElements}
+  export {canvasElementsFiltered, canvasElements}
