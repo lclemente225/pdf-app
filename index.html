@@ -18,6 +18,7 @@
     </div>
     <div class="content-area flex-col-center">
       <div class="file-functions">
+        <button id="open-modal-signature">Create Signature</button>
         <input type="file" id="pdf-file-input" accept=".pdf" aria-placeholder="dude">
         <button id="save-pdf" >Save File</button>
       </div>
@@ -28,6 +29,18 @@
       <span>Created by Lawrence Clemente</span>
       <a class="portfolio-link" href="https://lclemente225.github.io/">Check out my portfolio</a>
     </div>
+
+    <div class="signing-modal flex-col-center">
+      <div class="signing-section flex-col-center">
+        <canvas id="signature-canvas" width="80%" height="40%"></canvas>
+          Put your Signature Here
+        <span class="signature-modal-buttons">
+          <button>Insert Signature</button>
+          <button class="close-modal">Cancel</button>
+        </span>
+      </div>
+    </div>
+
   </body>
 
   <script src="./index.js" type="module"></script>

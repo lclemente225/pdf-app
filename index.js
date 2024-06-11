@@ -1,28 +1,34 @@
   import { handleFileSelect } from './utils/render.js';
   import * as pcDrawFn from './utils/pc-draw.js';
   import {saveCanvasToPDF} from './utils/save-file.js';
+  import canvasElementsFiltered from './utils/canvas-filter-array.js';
   const { pdfjsLib } = globalThis;
   pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.0.379/pdf.worker.mjs';
-  const {startDrawingPC, stopDrawingPC, drawPC} = pcDrawFn;
+  const {startDrawingPC, stopDrawingPC, drawPC, openModalHandler} = pcDrawFn;
   const fileUploadInput = document.getElementById('pdf-file-input');
   const saveButton = document.getElementById("save-pdf");
   const pdfContainer = document.getElementById("pdfContent");
   let canvasElements = pdfContainer.children;//this returns an HTMLCollection[]
 
-  function canvasElementsFiltered(htmlCollection){
-    let canvasElementsArray = Array.from(htmlCollection);
-    let canvasElementsFilter = canvasElementsArray.filter((element) => {
-      let pageNumSelect = Array.from(element.classList).includes("page-number");
-      return !pageNumSelect
-    })
-    return canvasElementsFilter
-  }
+  let openModalButton = document.getElementById("open-modal-signature");
+  let modal = document.getElementsByClassName("signing-modal")[0];
+  let closeModalButton = document.getElementsByClassName("close-modal")[0];
 
   function moveMoveHandler(e, drawOnThisCanvas, canvasIndex){
-    return startDrawingPC(e, drawOnThisCanvas, canvasIndex, e.clientX, e.clientY)
+    return startDrawingPC(e, drawOnThisCanvas, canvasIndex)
   }
+  openModalButton.addEventListener("click", () => {
+    modal.classList.add("signing")
+  })
 
+  closeModalButton.addEventListener("click", () => {
+    modal.classList.remove("signing")
+  })
   //make function to create a square?
+/*   
+
+tHIS IS INITIAL ATTEMPT
+when you click, you shoudl make a canvas and draw on it
   pdfContainer.addEventListener("mousedown",  function(e) {
     let drawOnThisCanvas;
     let canvasIndex;
@@ -40,20 +46,18 @@
           e.clientY <= rect.bottom
         ) {
           canvasIndex = e.target.classList[1];
-          //put width height and border color on canvas index 
           drawOnThisCanvas = canvas
-            //getCursorPosition(canvas, e);
             break; // Break out of the loop once the correct canvas is found
         }
     }
 
     pdfContainer.addEventListener("mousemove", moveMoveHandler(e, drawOnThisCanvas, canvasIndex))
   })  
-
-  pdfContainer.addEventListener("mouseup", () => {
+ */
+ /*  pdfContainer.addEventListener("mouseup", () => {
     stopDrawingPC()
     pdfContainer.removeEventListener("mousemove", moveMoveHandler)
-  })
+  }) */
   
   fileUploadInput.addEventListener('change', (e) => {
       handleFileSelect(e, pdfContainer, pdfjsLib)
@@ -64,37 +68,14 @@
     let canvas = filteredCanvasElements[0].getBoundingClientRect();
     let widthInPixels = canvas.width;
     let heightInPixels = canvas.height;
-    let dpi = 300;
+    /* let dpi = 300;
     let widthInInches = widthInPixels / dpi;
     let heightInInches = heightInPixels / dpi;
     let widthInPoints = widthInInches * 120;
-    let heightInPoints = heightInInches * 120;
+    let heightInPoints = heightInInches * 120; */
     saveCanvasToPDF(filteredCanvasElements, widthInPixels, heightInPixels);
   })
 
-  
-  //this should be an onclick event
-  //it creates a canvas where you can sign
-  //hopefully
- /*  function relMouseCoords(event){
-      var totalOffsetX = 0;
-      var totalOffsetY = 0;
-      var canvasX = 0;
-      var canvasY = 0;
-      var currentElement = this;
-      console.log("check whop whop")
-      do{
-          totalOffsetX += currentElement.offsetLeft - currentElement.scrollLeft;
-          totalOffsetY += currentElement.offsetTop - currentElement.scrollTop;
-      }
-      while(currentElement = currentElement.offsetParent)
-
-          canvasX = event.pageX - totalOffsetX;
-          canvasY = event.pageY - totalOffsetY;
-
-      return {x:canvasX, y:canvasY}
-  }
-  HTMLCanvasElement.prototype.relMouseCoords = relMouseCoords; */
 
   //todo ideas
   //can add function to resize scale when the window changes.
