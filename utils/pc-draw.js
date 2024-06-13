@@ -45,29 +45,30 @@ canvas.addEventListener('mousemove', draw);
 
 */
 
+let isDrawing = false;
+
 function openModalHandler(){
     
 }
 
 function startDrawingPC(e, canvas, classname) {
-    let newCanvas = document.createElement("canvas")
-    let ctx = newCanvas.getContext('2d')
+    let ctx = canvas.getContext('2d')
     //console.log("startDrawingPC: we got it boyx ", canvas, canvas.classList, x, y)
     
-    newCanvas.classList.add("signature")
+    canvas.classList.add("signature")
     const rect = canvas.getBoundingClientRect()
     const x = rect.width;
     const y = rect.height;
-      console.log("location of drawing", x, y, rect)
+      console.log("location of drawing startDrawingPC: ", x, y, rect)
       ctx.beginPath();
       drawPC(e, ctx, x, y)
     
-      newCanvas.width = x;
+      /* newCanvas.width = x;
       newCanvas.height = y;
       newCanvas.backgroundColor = "white";
-  /*  const x = e.clientX - canvas.offsetLeft;
-    const y = e.clientY - canvas.offsetTop;*/
-      document.body.appendChild(newCanvas)
+    const x = e.clientX - canvas.offsetLeft;
+    const y = e.clientY - canvas.offsetTop;
+      document.body.appendChild(newCanvas) */
 }
 
 function stopDrawingPC(e, canvas) {
