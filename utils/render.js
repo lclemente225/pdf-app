@@ -41,15 +41,18 @@ function handleFileSelect(event, container, library) {
   
       //iterate through all pages and render and append to canvas container
       for(let i = 1; i <= pdfDoc.numPages; i++) {
-        let scale = 1.5;
         const newPage = await pdfDoc.getPage(i);
         let pdfWidth = newPage._pageInfo.view[2];
+          let scale = 1.75;
+        console.log("pdf width", pdfWidth, window.innerWidth, window.innerWidth*0.9/pdfWidth)
         //scale so if it's too large, then make it smaller
         if(pdfWidth > window.innerWidth*0.9){
-          let windowWidth = window.innerWidth * 0.8;
+          let windowWidth = window.innerWidth * 0.9;
           let scaleValue = windowWidth/pdfWidth;
           scale = scaleValue;
+          console.log("scaleValue",scaleValue)
         }
+
         const viewport = newPage.getViewport({ scale });
         const newCanvas = document.createElement("canvas");
         const newContext = newCanvas.getContext('2d');
@@ -57,15 +60,15 @@ function handleFileSelect(event, container, library) {
         newCanvas.height = viewport.height;
         console.log("This is a new page for the pdf in render.js file: ", newPage.getViewport())
         
-        //newContext.strokeText('1', 50, 200)
 
         newCanvas.classList.add("canvas-render")
-        newCanvas.classList.add(`${i}`)
+        newCanvas.classList.add(`canvas-${i}`)
         pdfContainer.appendChild(newCanvas)
   
       // Render the PDF page on the canvas
         await newPage.render({ canvasContext: newContext, viewport }).promise
         .then(() => {
+          //add page numbers
           const pageNum = document.createElement("span");
           pageNum.classList.add(`page-number-${i}`)
           pageNum.classList.add(`page-number`)

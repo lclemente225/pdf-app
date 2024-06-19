@@ -10,6 +10,8 @@ export async function saveCanvasToPDF(canvasElements, width, height) {
       //3. adds a page to the pdf 
       //4. continue loop
         const imageDataUrl = element.toDataURL('image/jpeg');
+      console.log("saving", element)
+        
         //210 297
         combinedPDF.addImage(imageDataUrl, 'JPEG', 0, 0, 210, 297);
         combinedPDF.addPage();

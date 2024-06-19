@@ -1,8 +1,4 @@
-import { canvasElementsFiltered } from "../index.js";
-const pdfContainer = document.getElementById("pdfContent");
-const canvasElements = pdfContainer.children;
-//ONCLICK GET CANVAS AND MATCH
- 
+
 /*
 idea
 1. use a modal
@@ -11,89 +7,52 @@ idea
 4. append to canvas
 5. delete will remove that canvas => maybe need to refresh page?
 
-let canvas = document.getElementById('myCanvas');
-let ctx = canvas.getContext('2d');
-
-let painting = false;
-
-function startDraw(e) {
-    painting = true;
-    document.getElementById("canvas");
-    draw(e);
-}
-
-function endDraw() {
-    painting = false;
-    ctx.beginPath();
-}
-
-function draw(e) {
-    if (!painting) return;
-    ctx.lineWidth = 10;
-    ctx.lineCap = 'round';
-    ctx.strokeStyle = 'black';
-
-    ctx.lineTo(e.clientX, e.clientY);
-    ctx.stroke();
-    ctx.beginPath();
-    ctx.moveTo(e.clientX, e.clientY);
-}
-
-canvas.addEventListener('mousedown', startDraw);
-canvas.addEventListener('mouseup', endDraw);
-canvas.addEventListener('mousemove', draw);
-
 */
 
 let isDrawing = false;
 
-function openModalHandler(){
-    
+let mouseLocation = {x:0, y:0}
+
+function mousePosition(e, canvas){
+    mouseLocation.x = e.clientX - canvas.offsetLeft;
+    mouseLocation.y = e.clientY - canvas.offsetTop;
 }
 
-function startDrawingPC(e, canvas, classname) {
-    let ctx = canvas.getContext('2d')
-    //console.log("startDrawingPC: we got it boyx ", canvas, canvas.classList, x, y)
-    
+function startDrawingPC(e, canvas,) {
+    isDrawing = true;
     canvas.classList.add("signature")
-    const rect = canvas.getBoundingClientRect()
-    const x = rect.width;
-    const y = rect.height;
-      console.log("location of drawing startDrawingPC: ", x, y, rect)
-      ctx.beginPath();
-      drawPC(e, ctx, x, y)
-    
-      /* newCanvas.width = x;
-      newCanvas.height = y;
-      newCanvas.backgroundColor = "white";
-    const x = e.clientX - canvas.offsetLeft;
-    const y = e.clientY - canvas.offsetTop;
-      document.body.appendChild(newCanvas) */
+    mousePosition(e, canvas)
 }
 
 function stopDrawingPC(e, canvas) {
-    console.log("stopDrwaingPC isDrawing")
-    //ctx.beginPath(); // Start a new path
+    isDrawing = false;
+    canvas.classList.remove("signature");
 }
 
-function drawPC(e, ctx, x, y) {
-    console.log("drawPC: ooo im drawing messy, drawPC", x, y)
-    
-    ctx.lineWidth = 10;
+function drawPC(e, canvas) {
+    if(!isDrawing){
+        return
+    }
+    let ctx = canvas.getContext('2d')
+    ctx.beginPath();
+    ctx.lineWidth = 2;
     ctx.lineCap = 'round';
     ctx.strokeStyle = 'black';
 
-    ctx.moveTo(x+50, y+50);
-    ctx.lineTo(x+110, y+110);//give coordinates for line
-    ctx.stroke();//actually draw line
-    ctx.beginPath();// Start a new path for next segment
+    ctx.moveTo(mouseLocation.x, mouseLocation.y);
+    mousePosition(e, canvas)
+    //give coordinates for line
+    ctx.lineTo(mouseLocation.x, mouseLocation.y);
+    //actually draw line
+    ctx.stroke();
 }
 
-function deleteDrawing(){
-
+function deleteDrawing(canvas){
+    let ctx = canvas.getContext("2d")
+    ctx.clearRect(0,0,canvas.width, canvas.height)
 }
 
-export {startDrawingPC, stopDrawingPC, drawPC, openModalHandler}
+export {startDrawingPC, stopDrawingPC, drawPC, deleteDrawing}
 
 /* context.beginPath();
 context.moveTo(150,25);      // starting point at the top of the triangle
