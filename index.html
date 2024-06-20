@@ -20,6 +20,7 @@
     <div class="content-area flex-col-center">
       <div class="file-functions">
         <button id="open-modal-signature">Create Signature</button>
+        <input id="insert-signature" type="checkbox">Insert Signature?</input>
         <input type="file" id="pdf-file-input" accept=".pdf" aria-placeholder="dude">
         <button id="save-pdf" >Save File</button>
       </div>
@@ -34,7 +35,7 @@
     <div class="signing-modal flex-col-center">
       <div class="signing-section flex-col-center">
          <span> Put your Signature Below</span>
-        <canvas id="signature-canvas" width="450" height="300" ></canvas>
+        <canvas id="signature-canvas" width="350" height="100" ></canvas>
         <span class="signature-modal-buttons">
           <button class="close-modal">Save Signature</button>
           <button id="clear-signature">Clear Signature</button>

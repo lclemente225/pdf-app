@@ -1,4 +1,4 @@
-export async function saveCanvasToPDF(canvasElements, width, height) {
+export async function saveCanvasToPDF(canvasElements, signatureCanvas ,width, height) {
     // Create a new PDF document to store the combined pages
     const combinedPDF = new jsPDF();
     // Iterate through the array of canvases

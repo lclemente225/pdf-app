@@ -16,7 +16,9 @@
   let closeModalButton = document.getElementsByClassName("close-modal")[0];
   let signatureCanvas = document.getElementById("signature-canvas");
   let clearSignature = document.getElementById("clear-signature");
-
+  let insertSignatureCheckbox = document.getElementById("insert-signature");
+  let insertSignatureState = false;
+  let signatureArray = []
 
   openModalButton.addEventListener("click", (e) => {
     modal.classList.add("signing")
@@ -40,26 +42,33 @@
   signatureCanvas.addEventListener("mouseleave", (e) => stopDrawingPC(e, signatureCanvas))
 
 pdfContainer.addEventListener("click",(e) => {
-  let {canvasX, canvasY, selectedCanvas} = getInsertCoords(e);
- // pdf.addHTML(selectedCanvas, 300, 300)
+  if(insertSignatureState){
+    let {canvasX, canvasY, selectedCanvas} = getInsertCoords(e);
+    console.log("this is the target", e)
     const ctx = selectedCanvas.getContext('2d');
     const sigCtx = signatureCanvas.getContext('2d');
-    console.log(sigCtx.canvas)
     let sigH = sigCtx.canvas.height;
     let sigW = sigCtx.canvas.width;
-    const sigImgData = sigCtx.getImageData(0, 0, sigW, sigH)
-    ctx.putImageData(sigImgData, canvasX, canvasY);
+    sigCtx.fillStyle = "rgba(100,100,200,1)";
+    sigCtx.shadowColor = "rgba(100,100,200,1)";
+    signatureArray.push({
+      id: signatureArray.length+1,
+      canvas: signatureCanvas
+    })
+    for(let canvas of signatureArray){
+      const sigImgData = sigCtx.getImageData(0, 0, sigW, sigH)
+      ctx.putImageData(sigImgData, canvasX, canvasY);
 
-
-    //210 297
-    
-
-//DELETE last page before saving
-//because it's empty
- //selectedCanvas.addImage(signatureCanvas, 'JPEG', canvasX, canvasY, 300, 150 )
-
+    }
+  } else {
+    console.log("target", e)
+    return
+  }
+  
 
 })   
+
+insertSignatureCheckbox.addEventListener("click", (e) => insertSignatureState = e.target.checked)
 
   // file upload and save functions  
   fileUploadInput.addEventListener('change', (e) => {
@@ -69,6 +78,8 @@ pdfContainer.addEventListener("click",(e) => {
   saveButton.addEventListener('click', () => { 
     let filteredCanvasElements = canvasElementsFiltered(canvasElements)
     let canvas = filteredCanvasElements[0].getBoundingClientRect();
+    let signatureCtx = signatureCanvas.getContext('2d');
+    console.log("saving sig", signatureCtx)
     let widthInPixels = canvas.width;
     let heightInPixels = canvas.height;
     /* let dpi = 300;
