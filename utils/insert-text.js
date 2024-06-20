@@ -32,6 +32,28 @@ function getInsertCoords(e){
         }}
 }
 
+function getSignatureBounds(canvas) {
+  const ctx = canvas.getContext('2d');
+  const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+  const data = imageData.data;
+  let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
+
+  // Scan the image data
+  for(let y = 0; y < canvas.height; y++) {
+    for(let x = 0; x < canvas.width; x++) {
+      const alpha = data[(y * canvas.width + x) * 4 + 3];
+      if(alpha > 0) { // If the pixel is not transparent
+        minX = Math.min(minX, x);
+        minY = Math.min(minY, y);
+        maxX = Math.max(maxX, x);
+        maxY = Math.max(maxY, y);
+      }
+    }
+  }
+
+  // Return the bounds
+  return { minX, minY, width: maxX - minX + 1, height: maxY - minY + 1 };
+}
 
 
 
@@ -51,4 +73,4 @@ function getInsertCoords(e){
    
        */
       
-export {getInsertCoords} 
+export {getInsertCoords, getSignatureBounds} 

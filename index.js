@@ -2,7 +2,7 @@
   import * as pcDrawFn from './utils/pc-draw.js';
   import {saveCanvasToPDF} from './utils/save-file.js';
   import canvasElementsFiltered from './utils/canvas-filter-array.js';
-  import { getInsertCoords } from './utils/insert-text.js';
+  import { getInsertCoords,getSignatureBounds } from './utils/insert-text.js';
   const { pdfjsLib } = globalThis;
   pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.0.379/pdf.worker.mjs';
   const {startDrawingPC, stopDrawingPC, drawPC, deleteDrawing} = pcDrawFn;
@@ -11,6 +11,10 @@
   const pdfContainer = document.getElementById("pdfContent");
   let canvasElements = pdfContainer.children;//this returns an HTMLCollection[]
 
+  let instructionModalOpen = document.getElementById("instructions-title");
+  let instructionModalClose = document.getElementsByClassName("close-instructions-button")[0];
+  let instructionsModal = document.getElementsByClassName("instructions-modal")[0];
+
   let openModalButton = document.getElementById("open-modal-signature");
   let modal = document.getElementsByClassName("signing-modal")[0];
   let closeModalButton = document.getElementsByClassName("close-modal")[0];
@@ -18,7 +22,15 @@
   let clearSignature = document.getElementById("clear-signature");
   let insertSignatureCheckbox = document.getElementById("insert-signature");
   let insertSignatureState = false;
-  let signatureArray = []
+  
+
+  instructionModalOpen.addEventListener("click", (e) => {
+    instructionsModal.classList.add("view-instructions")
+  })
+
+  instructionModalClose.addEventListener("click", (e) => {
+    instructionsModal.classList.remove("view-instructions")
+  })
 
   openModalButton.addEventListener("click", (e) => {
     modal.classList.add("signing")
@@ -46,20 +58,20 @@ pdfContainer.addEventListener("click",(e) => {
     let {canvasX, canvasY, selectedCanvas} = getInsertCoords(e);
     console.log("this is the target", e)
     const ctx = selectedCanvas.getContext('2d');
-    const sigCtx = signatureCanvas.getContext('2d');
-    let sigH = sigCtx.canvas.height;
-    let sigW = sigCtx.canvas.width;
-    sigCtx.fillStyle = "rgba(100,100,200,1)";
-    sigCtx.shadowColor = "rgba(100,100,200,1)";
-    signatureArray.push({
-      id: signatureArray.length+1,
-      canvas: signatureCanvas
-    })
-    for(let canvas of signatureArray){
-      const sigImgData = sigCtx.getImageData(0, 0, sigW, sigH)
-      ctx.putImageData(sigImgData, canvasX, canvasY);
 
-    }
+    const bounds = getSignatureBounds(signatureCanvas);
+    const croppedCanvas = document.createElement('canvas');
+    croppedCanvas.width = bounds.width;
+    croppedCanvas.height = bounds.height;
+    const croppedCtx = croppedCanvas.getContext('2d');
+    croppedCanvas.style.border = "2px solid black";
+    croppedCtx.drawImage(signatureCanvas, bounds.minX, bounds.minY, bounds.width, bounds.height, 0, 0, bounds.width, bounds.height);
+
+    ctx.drawImage(croppedCanvas, (canvasX-50), (canvasY-40), croppedCanvas.width, croppedCanvas.height);
+
+    signatureCanvas.addEventListener("click", (e) => {
+      console.log("signature canvas DRAWING", e.target)
+    })
   } else {
     console.log("target", e)
     return

@@ -14,15 +14,19 @@
     </div>
     <!-- <a href="/test">This link goes to test endpoint</a> -->
     <div id="instructions-title" class="flex-center">
-      Upload your file here 
-      and then click anywhere to sign
+      Read Instructions Here
     </div>
     <div class="content-area flex-col-center">
-      <div class="file-functions">
-        <button id="open-modal-signature">Create Signature</button>
-        <input id="insert-signature" type="checkbox">Insert Signature?</input>
+      <div class="file-functions flex-center">
         <input type="file" id="pdf-file-input" accept=".pdf" aria-placeholder="dude">
         <button id="save-pdf" >Save File</button>
+      </div>
+      <div class="sign-functions flex-col-center">
+        <h4>Signature Tools</h4>
+        <div>
+          <button id="open-modal-signature">Create Signature</button>
+          <input id="insert-signature" type="checkbox">Insert Signature?</input>
+        </div>
       </div>
       <div id="pdfContent">
       </div>
@@ -32,10 +36,36 @@
       <a class="portfolio-link" href="https://lclemente225.github.io/">Check out my portfolio</a>
     </div>
 
+    <div class="instructions-modal flex-center">
+      <div class="instructions-list flex-col-center">
+        <ol>
+        <li>
+          Click on "Create Signature". You can write your signature there.
+        </li>
+        <li>
+          Click on "Save Signature". The window will close.
+        </li>
+        <li>
+          If you need to reset your signature, you can click on "Clear Signature"
+        </li>
+        <li>
+          Make sure you check the "Insert Signature" checkbox if you want to sign the pdf.
+        </li>
+        <li>
+          Click on the pdf to sign. 
+        </li>
+      </ol>
+      <div class="close-instructions-button">
+        Close Instructions
+      </div>
+      </div>
+      
+    </div>
+
     <div class="signing-modal flex-col-center">
       <div class="signing-section flex-col-center">
          <span> Put your Signature Below</span>
-        <canvas id="signature-canvas" width="350" height="100" ></canvas>
+        <canvas id="signature-canvas" width="350" height="100" backgroundColor="rgba(100,100,100,1)"></canvas>
         <span class="signature-modal-buttons">
           <button class="close-modal">Save Signature</button>
           <button id="clear-signature">Clear Signature</button>
