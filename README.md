@@ -18,5 +18,6 @@ To create a basic PDF application that can render, save, add your signature to P
     <li>expressJS</li>
 </ol>
 
-
+## Notes
+I wanted to use the HTML canvas element and javascript for this project. I used some libraries to help with the pdf rendering and saving process. Adding and removing signatures was purely using the HTML canvas methods. I learned more about how the canvas works and manipulating data to render pdfs on the canvas as well as save them.
 

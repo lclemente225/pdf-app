@@ -1,14 +1,3 @@
-
-/*
-idea
-1. use a modal
-2. create a canvas on that modal
-3. write on that modal canvas
-4. append to canvas
-5. delete will remove that canvas => maybe need to refresh page?
-
-*/
-
 let isDrawing = false;
 
 let mouseLocation = {x:0, y:0}
@@ -61,9 +50,3 @@ function deleteDrawing(canvasElements){
 }
 
 export {startDrawingPC, stopDrawingPC, drawPC, deleteDrawing}
-
-/* context.beginPath();
-context.moveTo(150,25);      // starting point at the top of the triangle
-context.lineTo(250,100);     // line to right bottom corner
-context.lineTo(50,100);      // line to left bottom corner
-context.stroke();  */
