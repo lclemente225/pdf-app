@@ -3,6 +3,7 @@
   import {saveCanvasToPDF} from './utils/save-file.js';
   import canvasElementsFiltered from './utils/canvas-filter-array.js';
   import { getInsertCoords,getSignatureBounds } from './utils/insert-text.js';
+  import { isMouseInSig } from './utils/move-sig.js';
   const { pdfjsLib } = globalThis;
   pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.0.379/pdf.worker.mjs';
   const {startDrawingPC, stopDrawingPC, drawPC, deleteDrawing} = pcDrawFn;
@@ -21,7 +22,9 @@
   let signatureCanvas = document.getElementById("signature-canvas");
   let clearSignature = document.getElementById("clear-signature");
   let insertSignatureCheckbox = document.getElementById("insert-signature");
+  let undoSignature = document.getElementById("undo-signature");
   let insertSignatureState = false;
+  let signatureArray = [];
   
 
   instructionModalOpen.addEventListener("click", (e) => {
@@ -53,38 +56,75 @@
 
   signatureCanvas.addEventListener("mouseleave", (e) => stopDrawingPC(e, signatureCanvas))
 
-pdfContainer.addEventListener("click",(e) => {
-  if(insertSignatureState){
-    let {canvasX, canvasY, selectedCanvas} = getInsertCoords(e);
-    console.log("this is the target", e)
-    const ctx = selectedCanvas.getContext('2d');
+  pdfContainer.addEventListener("click",(e) => {
+    if(insertSignatureState){
+      let {sigCanvasX, sigCanvasY, parentCanvasLeft, parentCanvasTop, selectedCanvas} = getInsertCoords(e);
+      const ctx = selectedCanvas.getContext('2d');
 
-    const bounds = getSignatureBounds(signatureCanvas);
-    const croppedCanvas = document.createElement('canvas');
-    croppedCanvas.width = bounds.width;
-    croppedCanvas.height = bounds.height;
-    const croppedCtx = croppedCanvas.getContext('2d');
-    croppedCanvas.style.border = "2px solid black";
-    croppedCtx.drawImage(signatureCanvas, bounds.minX, bounds.minY, bounds.width, bounds.height, 0, 0, bounds.width, bounds.height);
+      const bounds = getSignatureBounds(signatureCanvas);
+      const croppedCanvas = document.createElement('canvas');
+      croppedCanvas.classList.add("signature-on-pdf");
+      croppedCanvas.width = bounds.width;
+      croppedCanvas.height = bounds.height;
+      const croppedCtx = croppedCanvas.getContext('2d');
+      let scale = 0.9;
+      croppedCtx.scale(scale,scale)
+      croppedCtx.drawImage(signatureCanvas, bounds.minX, bounds.minY, bounds.width, bounds.height, 0, 0, bounds.width*scale, bounds.height*scale);
+      
+      signatureArray.push({
+          id: signatureArray.length+1,
+          parentCanvas: selectedCanvas,
+          canvasElementContext: croppedCtx,
+          width: croppedCanvas.width,
+          height: croppedCanvas.height,
+          x: sigCanvasX + parentCanvasLeft - croppedCanvas.height*0.5,
+          y: sigCanvasY + parentCanvasTop 
+      })
+      //console.log("signature canvas info:", sigCanvasX, parentCanvasLeft,  parentCanvasLeft + sigCanvasX, e.clientX)
+      //canvas, source x-location, source y-location, width, height
+      //destination x-location, destination y-location, destination width, destination height
 
-    ctx.drawImage(croppedCanvas, (canvasX-50), (canvasY-40), croppedCanvas.width, croppedCanvas.height);
+      for(let sig of signatureArray){
+        console.log("signatuesres", sig)
+        ctx.drawImage(croppedCanvas, 0, 0, croppedCanvas.width, croppedCanvas.height, 
+          (sigCanvasX-(croppedCanvas.height*0.5)), (sigCanvasY-(croppedCanvas.height*0.75*scale)), croppedCanvas.width*scale, croppedCanvas.height*scale);
+      }
+    } else {
+      console.log("target not found beep boop", e)
+      return
+    }
+  })   
 
-    signatureCanvas.addEventListener("click", (e) => {
-      console.log("signature canvas DRAWING", e.target)
-    })
-  } else {
-    console.log("target", e)
-    return
+  undoSignature.addEventListener("click", () => {
+
+    signatureArray.pop();
+    console.log("click")
+  })
+
+  function selectSigCanvas (e){
+    e.preventDefault();
+    let startX = e.clientX;
+    let startY = e.clientY;
+    for(let signature of signatureArray){
+      
+      if(isMouseInSig(startX, startY, signature)){
+        //console.log("true")
+      } else {
+        //console.log("false")
+      }
+      
+    }
   }
-  
 
-})   
+  pdfContainer.addEventListener("mousemove", (e) => {
+    selectSigCanvas(e)
+  })
 
-insertSignatureCheckbox.addEventListener("click", (e) => insertSignatureState = e.target.checked)
+  insertSignatureCheckbox.addEventListener("click", (e) => insertSignatureState = e.target.checked)
 
-  // file upload and save functions  
+    // file upload and save functions  
   fileUploadInput.addEventListener('change', (e) => {
-      handleFileSelect(e, pdfContainer, pdfjsLib)
+        handleFileSelect(e, pdfContainer, pdfjsLib)
   })
   
   saveButton.addEventListener('click', () => { 

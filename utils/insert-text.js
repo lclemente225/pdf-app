@@ -1,19 +1,12 @@
 //import {text} from 'pdf-lib'
 const pdfContainer = document.getElementById("pdfContent");
 const canvasElements = pdfContainer.children;
-const signatureCanvas  = document.getElementById("signature-canvas");
-
-/*
-grab signature and put it in the pdf
-*/
-
-let insertingSig = false;
 
 function getInsertCoords(e){
     for (let i = 0; i < canvasElements.length; i++) {
         const canvas = canvasElements[i];
         const rect = canvas.getBoundingClientRect();
-   
+        //console.log("this is the parent canvas: ", rect)
         if (
           e.clientX >= rect.left &&
           e.clientX <= rect.right &&
@@ -21,12 +14,15 @@ function getInsertCoords(e){
           e.clientY <= rect.bottom
         ) {
           let selectedCanvas = canvas;
-          let canvasX = e.clientX - rect.x;
-          let canvasY = e.clientY - rect.y;
+          let sigCanvasX = e.clientX - rect.x;
+          let sigCanvasY = e.clientY - rect.y;
+          let parentCanvasLeft = rect.left;
+          let parentCanvasTop = rect.top;
+          console.log("checking parent canvas position", parentCanvasLeft, parentCanvasTop)
           
           //when you click on the canvas, the addImage method will activate
           //the coords are here
-            return {canvasX, canvasY, selectedCanvas}
+            return {sigCanvasX, sigCanvasY, parentCanvasLeft, parentCanvasTop, selectedCanvas}
 
 //            break; // Break out of the loop once the correct canvas is found
         }}
@@ -36,7 +32,7 @@ function getSignatureBounds(canvas) {
   const ctx = canvas.getContext('2d');
   const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
   const data = imageData.data;
-  let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
+  let minX = 5000, minY = 5000, maxX = -5000, maxY = -5000;
 
   // Scan the image data
   for(let y = 0; y < canvas.height; y++) {
@@ -50,7 +46,6 @@ function getSignatureBounds(canvas) {
       }
     }
   }
-
   // Return the bounds
   return { minX, minY, width: maxX - minX + 1, height: maxY - minY + 1 };
 }

@@ -8,13 +8,13 @@
 
   <body>
     <div id="header" class="flex-center">
-      <h1>
+      <h1 class="font-arial">
         Free PDF Signer
       </h1>
     </div>
     <!-- <a href="/test">This link goes to test endpoint</a> -->
-    <div id="instructions-title" class="flex-center">
-      Read Instructions Here
+    <div class="flex-center">
+      <span id="instructions-title" class="font-arial">Read Instructions Here</span>
     </div>
     <div class="content-area flex-col-center">
       <div class="file-functions flex-center">
@@ -22,10 +22,11 @@
         <button id="save-pdf" >Save File</button>
       </div>
       <div class="sign-functions flex-col-center">
-        <h4>Signature Tools</h4>
+        <h4 class="font-arial">Signature Tools</h4>
         <div>
           <button id="open-modal-signature">Create Signature</button>
           <input id="insert-signature" type="checkbox">Insert Signature?</input>
+          <button id="undo-signature">Undo last signature</button>
         </div>
       </div>
       <div id="pdfContent">
