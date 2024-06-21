@@ -105,8 +105,14 @@ body {
     font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
   }
 
-  .file-functions{
+  .file-functions {
     margin-top: 10px;
+  }
+
+  .sign-functions {
+    background-color: rgb(255, 166, 0);
+    padding: 0 10px 10px 10px;
+    margin: 10px;
   }
 
   .portfolio-link {

@@ -25,6 +25,7 @@
   let undoSignature = document.getElementById("undo-signature");
   let insertSignatureState = false;
   let signatureArray = [];
+  let sigScale = 0.9;
   
 
   instructionModalOpen.addEventListener("click", (e) => {
@@ -67,9 +68,8 @@
       croppedCanvas.width = bounds.width;
       croppedCanvas.height = bounds.height;
       const croppedCtx = croppedCanvas.getContext('2d');
-      let scale = 0.9;
-      croppedCtx.scale(scale,scale)
-      croppedCtx.drawImage(signatureCanvas, bounds.minX, bounds.minY, bounds.width, bounds.height, 0, 0, bounds.width*scale, bounds.height*scale);
+      croppedCtx.scale(sigScale,sigScale)
+      croppedCtx.drawImage(signatureCanvas, bounds.minX, bounds.minY, bounds.width, bounds.height, 0, 0, bounds.width*sigScale, bounds.height*sigScale);
       
       signatureArray.push({
           id: signatureArray.length+1,
@@ -78,16 +78,20 @@
           width: croppedCanvas.width,
           height: croppedCanvas.height,
           x: sigCanvasX + parentCanvasLeft - croppedCanvas.height*0.5,
-          y: sigCanvasY + parentCanvasTop 
+          y: sigCanvasY + parentCanvasTop,
+          sigPlacementX:sigCanvasX-(croppedCanvas.height*0.5),
+          sigPlacementY: sigCanvasY-(croppedCanvas.height*0.75*sigScale),
+          imageData: ctx.getImageData(0,0,selectedCanvas.width,selectedCanvas.height) 
       })
       //console.log("signature canvas info:", sigCanvasX, parentCanvasLeft,  parentCanvasLeft + sigCanvasX, e.clientX)
       //canvas, source x-location, source y-location, width, height
       //destination x-location, destination y-location, destination width, destination height
+      //destination x and y location are like that to make sure that the signature will appear right above the mouse for easy placement
 
       for(let sig of signatureArray){
         console.log("signatuesres", sig)
         ctx.drawImage(croppedCanvas, 0, 0, croppedCanvas.width, croppedCanvas.height, 
-          (sigCanvasX-(croppedCanvas.height*0.5)), (sigCanvasY-(croppedCanvas.height*0.75*scale)), croppedCanvas.width*scale, croppedCanvas.height*scale);
+          (sigCanvasX-(croppedCanvas.height*0.5)), (sigCanvasY-(croppedCanvas.height*0.75*sigScale)), croppedCanvas.width*sigScale, croppedCanvas.height*sigScale);
       }
     } else {
       console.log("target not found beep boop", e)
@@ -96,9 +100,18 @@
   })   
 
   undoSignature.addEventListener("click", () => {
+    let prevPdfImg = signatureArray[signatureArray.length-1]["imageData"];
+    let removedSig = signatureArray.pop();
+    let parentCanvas = removedSig.parentCanvas;
+    let parentCanvasCtx = parentCanvas.getContext('2d');
 
-    signatureArray.pop();
-    console.log("click")
+    parentCanvasCtx.putImageData(prevPdfImg, 0, 0 )
+
+    for(let sig of signatureArray){
+      parentCanvasCtx.drawImage(sig.canvasElementContext.canvas, 0, 0, sig.width, sig.height, 
+        sig.sigPlacementX, sig.sigPlacementY, sig.width*sigScale, sig.height*sigScale);
+    }
+    console.log("removed sig", signatureArray.length-1, signatureArray)
   })
 
   function selectSigCanvas (e){
