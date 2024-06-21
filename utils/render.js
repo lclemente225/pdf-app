@@ -1,4 +1,4 @@
-import { canvasElements } from "../index.js";
+import { canvasElements, originalFileImgData } from "../index.js";
 
 
 function handleFileSelect(event, container, library) {

@@ -26,6 +26,8 @@
   let insertSignatureState = false;
   let signatureArray = [];
   let sigScale = 0.9;
+  let originalFileImgData = [];
+
   
 
   instructionModalOpen.addEventListener("click", (e) => {
@@ -44,7 +46,7 @@
     modal.classList.remove("signing")
   })
 
-  clearSignature.addEventListener("click", () => deleteDrawing(signatureCanvas))
+  clearSignature.addEventListener("click", () => deleteDrawing(canvasElements))
 
   signatureCanvas.addEventListener("mousedown", (e) => {
     let drawOnThisCanvas = signatureCanvas;
@@ -89,7 +91,6 @@
       //destination x and y location are like that to make sure that the signature will appear right above the mouse for easy placement
 
       for(let sig of signatureArray){
-        console.log("signatuesres", sig)
         ctx.drawImage(croppedCanvas, 0, 0, croppedCanvas.width, croppedCanvas.height, 
           (sigCanvasX-(croppedCanvas.height*0.5)), (sigCanvasY-(croppedCanvas.height*0.75*sigScale)), croppedCanvas.width*sigScale, croppedCanvas.height*sigScale);
       }
@@ -105,13 +106,8 @@
     let parentCanvas = removedSig.parentCanvas;
     let parentCanvasCtx = parentCanvas.getContext('2d');
 
-    parentCanvasCtx.putImageData(prevPdfImg, 0, 0 )
-
-    for(let sig of signatureArray){
-      parentCanvasCtx.drawImage(sig.canvasElementContext.canvas, 0, 0, sig.width, sig.height, 
-        sig.sigPlacementX, sig.sigPlacementY, sig.width*sigScale, sig.height*sigScale);
-    }
-    console.log("removed sig", signatureArray.length-1, signatureArray)
+    parentCanvasCtx.putImageData(prevPdfImg, 0, 0)
+    
   })
 
   function selectSigCanvas (e){
@@ -158,4 +154,4 @@
 
   //todo ideas
   //can add function to resize scale when the window changes.
-  export {canvasElementsFiltered, canvasElements}
+  export {canvasElementsFiltered, canvasElements, originalFileImgData}

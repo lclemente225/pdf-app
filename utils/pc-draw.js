@@ -47,9 +47,17 @@ function drawPC(e, canvas) {
     ctx.stroke();
 }
 
-function deleteDrawing(canvas){
-    let ctx = canvas.getContext("2d")
-    ctx.clearRect(0,0,canvas.width, canvas.height)
+function deleteDrawing(canvasElements){
+    console.log("cleared")
+    for(let i=0; i < canvasElements.length; i++){
+        if(i%2 != 0){
+            let canvas = canvasElements[i]
+            console.log(canvas,canvas.width, canvas.height)
+            let ctx = canvas.getContext("2d")
+            let imgData = ctx.getImageData(0,0,canvas.width, canvas.height)
+            ctx.putImageData(imgData, 0, 0)
+        }
+    }
 }
 
 export {startDrawingPC, stopDrawingPC, drawPC, deleteDrawing}
