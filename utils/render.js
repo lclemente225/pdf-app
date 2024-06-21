@@ -44,22 +44,18 @@ function handleFileSelect(event, container, library) {
         const newPage = await pdfDoc.getPage(i);
         let pdfWidth = newPage._pageInfo.view[2];
           let scale = 1.75;
-        console.log("pdf width", pdfWidth, window.innerWidth, window.innerWidth*0.9/pdfWidth)
         //scale so if it's too large, then make it smaller
         if(pdfWidth > window.innerWidth*0.9){
           let windowWidth = window.innerWidth * 0.9;
           let scaleValue = windowWidth/pdfWidth;
           scale = scaleValue;
-          console.log("scaleValue",scaleValue)
         }
 
         const viewport = newPage.getViewport({ scale });
         const newCanvas = document.createElement("canvas");
         const newContext = newCanvas.getContext('2d');
         newCanvas.width = viewport.width;
-        newCanvas.height = viewport.height;
-        console.log("This is a new page for the pdf in render.js file: ", newPage.getViewport())
-        
+        newCanvas.height = viewport.height;        
 
         newCanvas.classList.add("canvas-render")
         newCanvas.classList.add(`canvas-${i}`)

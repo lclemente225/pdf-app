@@ -1,4 +1,3 @@
-//import {text} from 'pdf-lib'
 const pdfContainer = document.getElementById("pdfContent");
 const canvasElements = pdfContainer.children;
 
@@ -6,7 +5,6 @@ function getInsertCoords(e){
     for (let i = 0; i < canvasElements.length; i++) {
         const canvas = canvasElements[i];
         const rect = canvas.getBoundingClientRect();
-        //console.log("this is the parent canvas: ", rect)
         if (
           e.clientX >= rect.left &&
           e.clientX <= rect.right &&
@@ -18,13 +16,10 @@ function getInsertCoords(e){
           let sigCanvasY = e.clientY - rect.y;
           let parentCanvasLeft = rect.left;
           let parentCanvasTop = rect.top;
-          console.log("checking parent canvas position", parentCanvasLeft, parentCanvasTop)
           
           //when you click on the canvas, the addImage method will activate
           //the coords are here
             return {sigCanvasX, sigCanvasY, parentCanvasLeft, parentCanvasTop, selectedCanvas}
-
-//            break; // Break out of the loop once the correct canvas is found
         }}
 }
 
@@ -49,23 +44,5 @@ function getSignatureBounds(canvas) {
   // Return the bounds
   return { minX, minY, width: maxX - minX + 1, height: maxY - minY + 1 };
 }
-
-
-
-      /*  let signaturePDF = new jsPDF();
-       let signatureImage = signatureCanvas.toDataUrl('image/jpeg'); */
-       //combinedPDF.addImage(signatureImage, 'JPEG', 0, 0, 210, 297);
-   
-       /*
-       1. create image from signature
-       2. make variable of the selected canvas
-       3. when you click on it, make check -> "insert sig here?"
-         -> provide canvas element info and x and y of click
-       4. grab signature canvas image and addImage to canvas element
-   
-       roadblock:
-       - how do i select the correct canvas?
-   
-       */
       
 export {getInsertCoords, getSignatureBounds} 

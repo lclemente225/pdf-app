@@ -90,10 +90,9 @@
       //destination x-location, destination y-location, destination width, destination height
       //destination x and y location are like that to make sure that the signature will appear right above the mouse for easy placement
 
-      for(let sig of signatureArray){
-        ctx.drawImage(croppedCanvas, 0, 0, croppedCanvas.width, croppedCanvas.height, 
-          (sigCanvasX-(croppedCanvas.height*0.5)), (sigCanvasY-(croppedCanvas.height*0.75*sigScale)), croppedCanvas.width*sigScale, croppedCanvas.height*sigScale);
-      }
+      ctx.drawImage(croppedCanvas, 0, 0, croppedCanvas.width, croppedCanvas.height, 
+        (sigCanvasX-(croppedCanvas.height*0.5)), (sigCanvasY-(croppedCanvas.height*0.75*sigScale)), croppedCanvas.width*sigScale, croppedCanvas.height*sigScale);
+      
     } else {
       console.log("target not found beep boop", e)
       return
@@ -107,6 +106,7 @@
     let parentCanvasCtx = parentCanvas.getContext('2d');
 
     parentCanvasCtx.putImageData(prevPdfImg, 0, 0)
+
   })
 
   function selectSigCanvas (e){
