@@ -107,7 +107,6 @@
     let parentCanvasCtx = parentCanvas.getContext('2d');
 
     parentCanvasCtx.putImageData(prevPdfImg, 0, 0)
-    
   })
 
   function selectSigCanvas (e){
