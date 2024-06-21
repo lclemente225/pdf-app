@@ -85,7 +85,6 @@
           sigPlacementY: sigCanvasY-(croppedCanvas.height*0.75*sigScale),
           imageData: ctx.getImageData(0,0,selectedCanvas.width,selectedCanvas.height) 
       })
-      //console.log("signature canvas info:", sigCanvasX, parentCanvasLeft,  parentCanvasLeft + sigCanvasX, e.clientX)
       //canvas, source x-location, source y-location, width, height
       //destination x-location, destination y-location, destination width, destination height
       //destination x and y location are like that to make sure that the signature will appear right above the mouse for easy placement
