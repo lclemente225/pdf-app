@@ -56,7 +56,6 @@ body {
   }
 
   #pdfContent canvas {
-    outline: 1px solid green;
     margin-bottom: 40px;
   }
 
@@ -66,9 +65,6 @@ body {
     color: white;
   }
 
-  .drawing {
-    outline: 2px solid green;
-  }
 
   #header {
     background-color: rgb(255, 248, 248);
