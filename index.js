@@ -9,12 +9,9 @@
   const {startDrawingPC, stopDrawingPC, drawPC, deleteDrawing} = pcDrawFn;
   const fileUploadInput = document.getElementById('pdf-file-input');
   const saveButton = document.getElementById("save-pdf");
+  let contentBody = document.getElementsByClassName("main-body")[0];
   const pdfContainer = document.getElementById("pdfContent");
   let canvasElements = pdfContainer.children;//this returns an HTMLCollection[]
-
-  let instructionModalOpen = document.getElementById("instructions-title");
-  let instructionModalClose = document.getElementsByClassName("close-instructions-button")[0];
-  let instructionsModal = document.getElementsByClassName("instructions-modal")[0];
 
   let openModalButton = document.getElementById("open-modal-signature");
   let modal = document.getElementsByClassName("signing-modal")[0];
@@ -26,7 +23,6 @@
   let insertSignatureState = false;
   let signatureArray = [];
   let sigScale = 0.9;
-  let originalFileImgData = [];
 
   
 
@@ -83,7 +79,7 @@
       //destination x and y location are like that to make sure that the signature will appear right above the mouse for easy placement
 
       ctx.drawImage(croppedCanvas, 0, 0, croppedCanvas.width, croppedCanvas.height, 
-        (sigCanvasX-(croppedCanvas.height*0.5)), (sigCanvasY-(croppedCanvas.height*0.75*sigScale)), croppedCanvas.width*sigScale, croppedCanvas.height*sigScale);
+        (sigCanvasX-(croppedCanvas.height*0.5)+25), (sigCanvasY-(croppedCanvas.height*0.75*sigScale)-39), croppedCanvas.width*sigScale, croppedCanvas.height*sigScale);
       
     } else {
       console.log("target not found beep boop", e)
@@ -101,6 +97,7 @@
 
   })
 
+  /* for moving signature */
   function selectSigCanvas (e){
     e.preventDefault();
     let startX = e.clientX;
@@ -116,11 +113,31 @@
     }
   }
 
+  window.document.addEventListener('DOMContentLoaded', () => {
+    
+  let signingLine = document.createElement('span');
+  signingLine.style.borderTop= '1px solid black';
+  signingLine.style.position = 'absolute';
+  signingLine.innerText='Insert Signature Above';
+  
   pdfContainer.addEventListener("mousemove", (e) => {
-    selectSigCanvas(e)
-  })
+    selectSigCanvas(e);
+    signingLine.style.top = `${e.clientY - 25}`; //screenXY
+    signingLine.style.left = `${e.clientX - 20} `;
+    contentBody.appendChild(signingLine);
 
-  insertSignatureCheckbox.addEventListener("click", (e) => insertSignatureState = e.target.checked)
+  })
+  //
+
+  insertSignatureCheckbox.addEventListener("click", (e) => {
+    insertSignatureState = e.target.checked;
+    if(e.target.checked){
+      signingLine.style.display = 'inline-block';
+    } else {
+      signingLine.style.display = 'none';
+    }
+  })
+  })
 
     // file upload and save functions  
   fileUploadInput.addEventListener('change', (e) => {
@@ -145,4 +162,4 @@
 
   //todo ideas
   //can add function to resize scale when the window changes.
-  export {canvasElementsFiltered, canvasElements, originalFileImgData}
+  export {canvasElementsFiltered, canvasElements }

@@ -118,12 +118,6 @@
     font-family: Arial, Helvetica, sans-serif;
   }
 
-  /* main content area */
-  .pdf-instruction-container {
-    display: flex;
-    width: 100vw;
-  }
-
   /* Signing modal */
   .signing-modal {
     display: none;

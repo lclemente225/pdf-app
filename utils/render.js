@@ -1,4 +1,4 @@
-import { canvasElements, originalFileImgData } from "../index.js";
+import { canvasElements } from "../index.js";
 
 
 function handleFileSelect(event, container, library) {
@@ -43,7 +43,7 @@ function handleFileSelect(event, container, library) {
       for(let i = 1; i <= pdfDoc.numPages; i++) {
         const newPage = await pdfDoc.getPage(i);
         let pdfWidth = newPage._pageInfo.view[2];
-          let scale = 1.75;
+          let scale = 2;
         //scale so if it's too large, then make it smaller
         if(pdfWidth > window.innerWidth*0.9){
           let windowWidth = window.innerWidth * 0.9;
@@ -55,11 +55,12 @@ function handleFileSelect(event, container, library) {
         const newCanvas = document.createElement("canvas");
         const newContext = newCanvas.getContext('2d');
         newCanvas.width = viewport.width;
-        newCanvas.height = viewport.height;        
+        newCanvas.height = viewport.height;    
 
         newCanvas.classList.add("canvas-render")
         newCanvas.classList.add(`canvas-${i}`)
         pdfContainer.appendChild(newCanvas)
+        //pdfContainer.style.width = '1000px'
   
       // Render the PDF page on the canvas
         await newPage.render({ canvasContext: newContext, viewport }).promise
