@@ -30,13 +30,6 @@
 
   
 
-  instructionModalOpen.addEventListener("click", (e) => {
-    instructionsModal.classList.add("view-instructions")
-  })
-
-  instructionModalClose.addEventListener("click", (e) => {
-    instructionsModal.classList.remove("view-instructions")
-  })
 
   openModalButton.addEventListener("click", (e) => {
     modal.classList.add("signing")

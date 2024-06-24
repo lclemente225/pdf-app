@@ -13,11 +13,10 @@
       </h1>
     </div>
     <!-- <a href="/test">This link goes to test endpoint</a> -->
-    <div class="flex-col-center">
-      <span id="instructions-title" class="font-arial">Read Instructions Here</span>
+    <div class="top-note flex-col-center">
       <span>Note: This application only works on desktop</span>
     </div>
-    <div class="content-area flex-col-center">
+    <div class="main-body flex-col-center">
       <div class="file-functions flex-center">
         <input type="file" id="pdf-file-input" accept=".pdf" aria-placeholder="dude">
         <button id="save-pdf" >Save File</button>
@@ -31,16 +30,8 @@
           <!-- <button id="clear-signature">Clear All Signatures</button> -->
         </div>
       </div>
-      <div id="pdfContent">
-      </div>
-    </div>
-    <div class="footer flex-center">
-      <span>Created by Lawrence Clemente</span>
-      <a class="portfolio-link" href="https://lclemente225.github.io/">Check out my portfolio</a>
-    </div>
-
-    <div class="instructions-modal flex-center">
       <div class="instructions-list flex-col-center">
+        <h3>Instructions for signing</h3>
         <ol>
         <li>
           Click on "Create Signature". You can write your signature there.
@@ -57,11 +48,14 @@
         <li>
           Click on the pdf to sign. The signature will appear right above your mouse cursor.
         </li>
-      </ol>
-      <div class="close-instructions-button">
-        Close Instructions
+        </ol>
       </div>
+      <div id="pdfContent">
       </div>
+    <div class="footer flex-center">
+      <span>Created by Lawrence Clemente</span>
+      <a class="portfolio-link" href="https://lclemente225.github.io/">Check out my portfolio</a>
+    </div>
       
     </div>
 
