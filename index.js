@@ -77,9 +77,9 @@
       //canvas, source x-location, source y-location, width, height
       //destination x-location, destination y-location, destination width, destination height
       //destination x and y location are like that to make sure that the signature will appear right above the mouse for easy placement
-
+//+25, -29
       ctx.drawImage(croppedCanvas, 0, 0, croppedCanvas.width, croppedCanvas.height, 
-        (sigCanvasX-(croppedCanvas.height*0.5)+25), (sigCanvasY-(croppedCanvas.height*0.75*sigScale)-39), croppedCanvas.width*sigScale, croppedCanvas.height*sigScale);
+        (sigCanvasX-(croppedCanvas.height*0.5)), (sigCanvasY-(croppedCanvas.height*0.75*sigScale)), croppedCanvas.width*sigScale, croppedCanvas.height*sigScale);
       
     } else {
       console.log("target not found beep boop", e)
@@ -115,7 +115,7 @@
 
   window.document.addEventListener('DOMContentLoaded', () => {
     
-  let signingLine = document.createElement('span');
+ /* let signingLine = document.createElement('span');
   signingLine.style.borderTop= '1px solid black';
   signingLine.style.position = 'absolute';
   signingLine.innerText='Insert Signature Above';
@@ -129,16 +129,19 @@
   })
   //
 
-  insertSignatureCheckbox.addEventListener("click", (e) => {
+   insertSignatureCheckbox.addEventListener("click", (e) => {
     insertSignatureState = e.target.checked;
     if(e.target.checked){
       signingLine.style.display = 'inline-block';
     } else {
       signingLine.style.display = 'none';
-    }
-  })
+    } 
+  })*/
   })
 
+  insertSignatureCheckbox.addEventListener("click", (e) => {
+    insertSignatureState = e.target.checked;
+  })
     // file upload and save functions  
   fileUploadInput.addEventListener('change', (e) => {
         handleFileSelect(e, pdfContainer, pdfjsLib)
