@@ -37,7 +37,6 @@ function drawPC(e, canvas) {
 }
 
 function deleteDrawing(canvasElements){
-    console.log("cleared")
     for(let i=0; i < canvasElements.length; i++){
         if(i%2 != 0){
             let canvas = canvasElements[i]
