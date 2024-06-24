@@ -49,4 +49,10 @@ function deleteDrawing(canvasElements){
     }
 }
 
-export {startDrawingPC, stopDrawingPC, drawPC, deleteDrawing}
+
+function clearSig(canvas){
+    let ctx = canvas.getContext("2d")
+    ctx.clearRect(0,0 , canvas.width, canvas.height)
+}
+
+export {startDrawingPC, stopDrawingPC, drawPC, deleteDrawing, clearSig}

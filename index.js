@@ -6,7 +6,7 @@
   import { isMouseInSig } from './utils/move-sig.js';
   const { pdfjsLib } = globalThis;
   pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.0.379/pdf.worker.mjs';
-  const {startDrawingPC, stopDrawingPC, drawPC, deleteDrawing} = pcDrawFn;
+  const {startDrawingPC, stopDrawingPC, drawPC, deleteDrawing, clearSig} = pcDrawFn;
   const fileUploadInput = document.getElementById('pdf-file-input');
   const saveButton = document.getElementById("save-pdf");
   let contentBody = document.getElementsByClassName("main-body")[0];
@@ -35,7 +35,7 @@
     modal.classList.remove("signing")
   })
 
-  clearSignature.addEventListener("click", () => deleteDrawing(canvasElements))
+  clearSignature.addEventListener("click", () => clearSig(signatureCanvas))
 
   signatureCanvas.addEventListener("mousedown", (e) => {
     let drawOnThisCanvas = signatureCanvas;
