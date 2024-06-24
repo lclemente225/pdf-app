@@ -52,7 +52,9 @@
     background-color: grey;
     height: 100vh;
     width: min-content;
+    max-width: 95vw;
     overflow: auto;
+    overflow-x: auto;
   }
 
   #pdfContent canvas {

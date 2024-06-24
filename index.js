@@ -24,8 +24,6 @@
   let signatureArray = [];
   let sigScale = 0.9;
 
-  
-
 
   openModalButton.addEventListener("click", (e) => {
     modal.classList.add("signing")
@@ -151,7 +149,6 @@
     let filteredCanvasElements = canvasElementsFiltered(canvasElements)
     let canvas = filteredCanvasElements[0].getBoundingClientRect();
     let signatureCtx = signatureCanvas.getContext('2d');
-    console.log("saving sig", signatureCtx)
     let widthInPixels = canvas.width;
     let heightInPixels = canvas.height;
     /* let dpi = 300;
