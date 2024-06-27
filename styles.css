@@ -100,10 +100,14 @@
     margin-top: 10px;
   }
 
-  .sign-functions {
+  .sign-functions-container {
     background-color: rgb(255, 166, 0);
     padding: 0 10px 10px 10px;
     margin: 10px;
+  }
+
+  .sign-functions {
+    gap: 30px;
   }
 
   .portfolio-link {
@@ -180,15 +184,54 @@
   }
 
   @media screen and (max-width: 1400px){
+    #header h1 {
+      font-size: 3rem;
+    }
+    
+    .top-note,
+    .sign-functions-container h4 {
+      font-size: 2rem;
+    }
+
+    #pdf-file-input, #save-pdf,
+    #open-modal-signature, #undo-signature {
+      font-size: 1.5rem;
+    }
+
+    #insert-signature {
+      width: 30px;
+      height: 30px;
+    }
+
+    .checkbox-label {
+      font-size: 30px;
+    }
+
     .instructions-list {
       font-size: 0.8rem;
       max-width: 80vw;
+      margin: 20px 0;
     }
+
+    .top-note {
+      margin-top: 20px;
+    }
+
+    .file-functions {
+      margin: 20px 0;
+    }
+
+    .sign-functions {
+      padding: 0 10px;
+      gap: 10px;
+    }
+
     #pdfContent:has(canvas) {
       margin: 20px 0 300px 0;
       padding: 30px 20px 10px 20px;
       max-width: 90vw;
     }
+
     .main-body {
       margin: 0;
     }

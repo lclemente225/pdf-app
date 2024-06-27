@@ -21,11 +21,15 @@
         <input type="file" id="pdf-file-input" accept=".pdf" aria-placeholder="dude">
         <button id="save-pdf" >Save File</button>
       </div>
-      <div class="sign-functions flex-col-center">
+      <div class="sign-functions-container flex-col-center">
         <h4 class="font-arial">Signature Tools</h4>
-        <div>
+        <div class="sign-functions flex-center">
           <button id="open-modal-signature">Create Signature</button>
-          <input id="insert-signature" type="checkbox">Insert Signature?</input>
+          <span class="flex-center">
+            <input id="insert-signature" type="checkbox">
+            <label class="checkbox-label" for="insert-signature">Insert Signature?</label>
+            </input>
+          </span>
           <button id="undo-signature">Undo last signature</button>
           <!-- <button id="clear-signature">Clear All Signatures</button> -->
         </div>
