@@ -52,6 +52,8 @@
     if(insertSignatureState){
       let {sigCanvasX, sigCanvasY, parentCanvasLeft, parentCanvasTop, selectedCanvas} = getInsertCoords(e);
       const ctx = selectedCanvas.getContext('2d');
+      let locationScaleX = 0.5;
+      let locationScaleY = 0.75;
 
       const bounds = getSignatureBounds(signatureCanvas);
       const croppedCanvas = document.createElement('canvas');
@@ -64,8 +66,10 @@
       //sigScale = e.view.innerWidth/selectedCanvas.width;
       if(e.view.innerWidth > 700 && e.view.innerWidth < 1400){
         sigScale = 0.6;
+        locationScaleX = 0.4;
       } else if (e.view.innerWidth < 700 ){
         sigScale = 0.7;
+        locationScaleX = 0.4;
       }
       croppedCtx.scale(sigScale,sigScale)
       croppedCtx.drawImage(signatureCanvas, bounds.minX, bounds.minY, bounds.width, bounds.height, 0, 0, bounds.width*sigScale, bounds.height*sigScale);
@@ -76,10 +80,10 @@
           canvasElementContext: croppedCtx,
           width: croppedCanvas.width,
           height: croppedCanvas.height,
-          x: sigCanvasX + parentCanvasLeft - croppedCanvas.height*0.5,
+          x: sigCanvasX + parentCanvasLeft - croppedCanvas.height*locationScaleX,
           y: sigCanvasY + parentCanvasTop,
-          sigPlacementX:sigCanvasX-(croppedCanvas.height*0.5),
-          sigPlacementY: sigCanvasY-(croppedCanvas.height*0.75*sigScale),
+          sigPlacementX:sigCanvasX-(croppedCanvas.height*locationScaleX),
+          sigPlacementY: sigCanvasY-(croppedCanvas.height*locationScaleY*sigScale),
           imageData: ctx.getImageData(0,0,selectedCanvas.width,selectedCanvas.height) 
       })
       //canvas, source x-location, source y-location, width, height
@@ -87,7 +91,7 @@
       //destination x and y location are like that to make sure that the signature will appear right above the mouse for easy placement
 //+25, -29
       ctx.drawImage(croppedCanvas, 0, 0, croppedCanvas.width, croppedCanvas.height, 
-        (sigCanvasX-(croppedCanvas.height*0.5*sigScale)), (sigCanvasY-(croppedCanvas.height*0.75*sigScale)), croppedCanvas.width*sigScale, croppedCanvas.height*sigScale);
+        (sigCanvasX-(croppedCanvas.height*locationScaleX*sigScale)), (sigCanvasY-(croppedCanvas.height*locationScaleY*sigScale)), croppedCanvas.width*sigScale, croppedCanvas.height*sigScale);
       
     } else {
       console.log("target not found beep boop")
