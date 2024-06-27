@@ -160,6 +160,22 @@
   })
 
 
+  /*
+  Touch Screen Functionality
+  */
+ 
+  signatureCanvas.onmousedown((e) => {
+    let drawOnThisCanvas = signatureCanvas;
+    startDrawingPC(e, drawOnThisCanvas)
+  })
+  
+  signatureCanvas.onmousemove((e) => drawPC(e, signatureCanvas))
+
+  signatureCanvas.onmouseup((e) => stopDrawingPC(e, signatureCanvas))
+
+  signatureCanvas.onmouseleave((e) => stopDrawingPC(e, signatureCanvas))
+
+
   //todo ideas
   //can add function to resize scale when the window changes.
   export {canvasElementsFiltered, canvasElements }
