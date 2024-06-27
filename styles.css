@@ -232,6 +232,10 @@
       max-width: 90vw;
     }
 
+    .signing-modal {
+      position: fixed;
+    }
+
     .signing-section {
       width: 100vw;
       height: 100vh;
@@ -255,4 +259,11 @@
     .main-body {
       margin: 0;
     }
+
+    .lock-screen {
+      height: 100%;
+      overflow: hidden;
+      width: 100%;
+      position: fixed;
+  }
   }

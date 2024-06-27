@@ -165,13 +165,18 @@
   */
  
   signatureCanvas.ontouchstart = (e) => {
+    document.body.classList.add('lock-screen');
     let drawOnThisCanvas = signatureCanvas;
     startDrawingTouch(e, drawOnThisCanvas)
   }
   
-  signatureCanvas.ontouchmove = (e) => drawTouch(e, signatureCanvas)
+  signatureCanvas.ontouchmove = (e) => {
+    drawTouch(e, signatureCanvas)}
 
-  signatureCanvas.ontouchend = (e) => stopDrawingTouch(e, signatureCanvas)
+  signatureCanvas.ontouchend = (e) => {
+    
+    document.body.classList.remove('lock-screen');
+    stopDrawingTouch(e, signatureCanvas)}
 
   signatureCanvas.ontouchcancel = (e) =>stopDrawingTouch(e, signatureCanvas)
 
