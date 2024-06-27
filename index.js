@@ -164,16 +164,16 @@
   Touch Screen Functionality
   */
  
-  signatureCanvas.onmousedown((e) => {
+  signatureCanvas.ontouchstart((e) => {
     let drawOnThisCanvas = signatureCanvas;
     startDrawingPC(e, drawOnThisCanvas)
   })
   
-  signatureCanvas.onmousemove((e) => drawPC(e, signatureCanvas))
+  signatureCanvas.ontouchmove((e) => drawPC(e, signatureCanvas))
 
-  signatureCanvas.onmouseup((e) => stopDrawingPC(e, signatureCanvas))
+  signatureCanvas.ontouchend((e) => stopDrawingPC(e, signatureCanvas))
 
-  signatureCanvas.onmouseleave((e) => stopDrawingPC(e, signatureCanvas))
+  signatureCanvas.ontouchcancel((e) => stopDrawingPC(e, signatureCanvas))
 
 
   //todo ideas
