@@ -26,10 +26,12 @@
 
 
   openModalButton.addEventListener("click", (e) => {
+    document.body.classList.add('lock-screen');
     modal.classList.add("signing")
   })
 
   closeModalButton.addEventListener("click", () => {
+    document.body.classList.remove('lock-screen');
     modal.classList.remove("signing")
   })
 
@@ -174,8 +176,6 @@
     drawTouch(e, signatureCanvas)}
 
   signatureCanvas.ontouchend = (e) => {
-    
-    document.body.classList.remove('lock-screen');
     stopDrawingTouch(e, signatureCanvas)}
 
   signatureCanvas.ontouchcancel = (e) =>stopDrawingTouch(e, signatureCanvas)
