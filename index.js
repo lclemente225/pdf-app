@@ -167,7 +167,6 @@
   */
  
   signatureCanvas.ontouchstart = (e) => {
-    document.body.classList.add('lock-screen');
     let drawOnThisCanvas = signatureCanvas;
     startDrawingTouch(e, drawOnThisCanvas)
   }
