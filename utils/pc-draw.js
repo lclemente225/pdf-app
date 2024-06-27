@@ -29,7 +29,7 @@ function drawPC(e, canvas) {
     }
     let ctx = canvas.getContext('2d')
     ctx.beginPath();
-    ctx.lineWidth = 2;
+    ctx.lineWidth = 3;
     ctx.lineCap = 'round';
     ctx.strokeStyle = 'black';
 

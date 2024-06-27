@@ -63,7 +63,7 @@
       console.log("insertsig scale: ", e.view.innerWidth ,selectedCanvas.width, e.view.innerWidth/selectedCanvas.width)
       //sigScale = e.view.innerWidth/selectedCanvas.width;
       if(e.view.innerWidth > 700 && e.view.innerWidth < 1400){
-        sigScale = 0.5;
+        sigScale = 0.6;
       } else if (e.view.innerWidth < 700 ){
         sigScale = 0.7;
       }
