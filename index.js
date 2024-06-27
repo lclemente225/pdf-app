@@ -69,7 +69,7 @@
         locationScaleX = 0.4;
       } else if (e.view.innerWidth <= 760 ){
         sigScale = 0.7;
-        locationScaleX = 0.4;
+        locationScaleX = 0.6;
       }
       croppedCtx.scale(sigScale,sigScale)
       croppedCtx.drawImage(signatureCanvas, bounds.minX, bounds.minY, bounds.width, bounds.height, 0, 0, bounds.width*sigScale, bounds.height*sigScale);
