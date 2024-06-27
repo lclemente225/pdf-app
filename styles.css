@@ -178,3 +178,9 @@
   .signature-on-pdf {
     border: 2px solid red !important;
   }
+
+  @media screen and (max-width: 1400px){
+    .instructions-list {
+      font-size: 0.8rem;
+    }
+  }
