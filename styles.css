@@ -182,6 +182,7 @@
   @media screen and (max-width: 1400px){
     .instructions-list {
       font-size: 0.8rem;
+      max-width: 80vw;
     }
     #pdfContent:has(canvas) {
       margin: 20px 0 300px 0;
