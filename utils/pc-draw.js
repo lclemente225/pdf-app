@@ -7,6 +7,11 @@ function mousePosition(e, canvas){
     mouseLocation.y = e.clientY - canvas.offsetTop;
 }
 
+function fingerPosition(e, canvas){
+    mouseLocation.x = e.touches[0].clientX - canvas.offsetLeft;
+    mouseLocation.y = e.touches[0].clientY - canvas.offsetTop;
+}
+
 function startDrawingPC(e, canvas,) {
     isDrawing = true;
     canvas.classList.add("signature")
@@ -54,4 +59,36 @@ function clearSig(canvas){
     ctx.clearRect(0,0 , canvas.width, canvas.height)
 }
 
-export {startDrawingPC, stopDrawingPC, drawPC, deleteDrawing, clearSig}
+function startDrawingTouch(e, canvas,) {
+    isDrawing = true;
+    canvas.classList.add("signature")
+    fingerPosition(e, canvas)
+}
+
+function stopDrawingTouch(e, canvas) {
+    isDrawing = false;
+    canvas.classList.remove("signature");
+}
+
+
+function drawTouch(e, canvas) {
+    if(!isDrawing){
+        return
+    }
+    let ctx = canvas.getContext('2d')
+    ctx.beginPath();
+    ctx.lineWidth = 2;
+    ctx.lineCap = 'round';
+    ctx.strokeStyle = 'black';
+
+    ctx.moveTo(mouseLocation.x, mouseLocation.y);
+    fingerPosition(e, canvas)
+    //give coordinates for line
+    ctx.lineTo(mouseLocation.x, mouseLocation.y);
+    //actually draw line
+    ctx.stroke();
+}
+
+
+
+export {startDrawingPC, stopDrawingPC, drawPC, deleteDrawing, clearSig, startDrawingTouch, stopDrawingTouch, drawTouch}

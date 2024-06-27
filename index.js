@@ -6,7 +6,7 @@
   import { isMouseInSig } from './utils/move-sig.js';
   const { pdfjsLib } = globalThis;
   pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.0.379/pdf.worker.mjs';
-  const {startDrawingPC, stopDrawingPC, drawPC, deleteDrawing, clearSig} = pcDrawFn;
+  const {startDrawingPC, stopDrawingPC, drawPC, deleteDrawing, clearSig, startDrawingTouch, stopDrawingTouch, drawTouch} = pcDrawFn;
   const fileUploadInput = document.getElementById('pdf-file-input');
   const saveButton = document.getElementById("save-pdf");
   let contentBody = document.getElementsByClassName("main-body")[0];
@@ -164,16 +164,16 @@
   Touch Screen Functionality
   */
  
-  signatureCanvas.ontouchstart((e) => {
+  signatureCanvas.ontouchstart = (e) => {
     let drawOnThisCanvas = signatureCanvas;
-    startDrawingPC(e, drawOnThisCanvas)
-  })
+    startDrawingTouch(e, drawOnThisCanvas)
+  }
   
-  signatureCanvas.ontouchmove((e) => drawPC(e, signatureCanvas))
+  signatureCanvas.ontouchmove = (e) => drawTouch(e, signatureCanvas)
 
-  signatureCanvas.ontouchend((e) => stopDrawingPC(e, signatureCanvas))
+  signatureCanvas.ontouchend = (e) => stopDrawingTouch(e, signatureCanvas)
 
-  signatureCanvas.ontouchcancel((e) => stopDrawingPC(e, signatureCanvas))
+  signatureCanvas.ontouchcancel = (e) =>stopDrawingTouch(e, signatureCanvas)
 
 
   //todo ideas
