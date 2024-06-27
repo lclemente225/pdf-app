@@ -232,6 +232,26 @@
       max-width: 90vw;
     }
 
+    .signing-section {
+      width: 100vw;
+      height: 100vh;
+      gap: 20px;
+    }
+
+    .signing-section span {
+      font-size: 3rem;
+    }
+
+    .signature-modal-buttons button {
+      font-size: 3rem;
+      padding: 10px 20px;
+    }
+
+    /* #signature-canvas {
+      width: 500px !important;
+      height: 300px !important;
+    } */
+
     .main-body {
       margin: 0;
     }

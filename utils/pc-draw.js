@@ -3,13 +3,13 @@ let isDrawing = false;
 let mouseLocation = {x:0, y:0}
 
 function mousePosition(e, canvas){
-    mouseLocation.x = e.clientX - canvas.offsetLeft;
-    mouseLocation.y = e.clientY - canvas.offsetTop;
+    mouseLocation.x = e.clientX - canvas.offsetLeft + window.scrollX;
+    mouseLocation.y = e.clientY - canvas.offsetTop + window.scrollY;
 }
 
 function fingerPosition(e, canvas){
-    mouseLocation.x = e.touches[0].clientX - canvas.offsetLeft;
-    mouseLocation.y = e.touches[0].clientY - canvas.offsetTop;
+    mouseLocation.x = e.touches[0].clientX - canvas.offsetLeft + window.scrollX;
+    mouseLocation.y = e.touches[0].clientY - canvas.offsetTop + window.scrollY;
 }
 
 function startDrawingPC(e, canvas,) {
