@@ -183,4 +183,12 @@
     .instructions-list {
       font-size: 0.8rem;
     }
+    #pdfContent:has(canvas) {
+      margin: 20px 0 300px 0;
+      padding: 30px 20px 10px 20px;
+      max-width: 90vw;
+    }
+    .main-body {
+      margin: 0;
+    }
   }

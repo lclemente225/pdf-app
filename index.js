@@ -80,7 +80,7 @@
         (sigCanvasX-(croppedCanvas.height*0.5)), (sigCanvasY-(croppedCanvas.height*0.75*sigScale)), croppedCanvas.width*sigScale, croppedCanvas.height*sigScale);
       
     } else {
-      console.log("target not found beep boop", e)
+      console.log("target not found beep boop")
       return
     }
   })   
